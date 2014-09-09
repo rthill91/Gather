@@ -1,2 +1,6 @@
 test blah blah
+<<<<<<< HEAD
 2
+=======
+1
+>>>>>>> e69bd44f4ee0da48126dcf405fdc5f8843236e17
