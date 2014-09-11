@@ -1,0 +1,37 @@
+main
+	profile pictures & name
+	your events (created & attending)
+create (* mandatory)
+	Title*
+	Category*
+	Location*
+	Time*
+	Description or Details
+	Target number of people
+	age requirements?
+browse
+	static search bar
+	rest is up in the air
+map
+	static search bar
+	rest is map
+
+Event Page (not in tab bar)
+	(event picture?)
+	(creator picture?)
+	all event details
+	attendance count
+	attend button
+	(maybe inline map)
+	(up in the air on comment display)
+	
+	
+tab structure
+persistent search on browse & map
+
+back button goes to home.  double tap to close
+
+
+what you can do without account
+	browse events and mark	as attending
+	
