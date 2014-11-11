@@ -24,30 +24,29 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 
-public class LoginActivity extends Activity {
+public class RegisterActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
         setupLoginButton();
-        setupRegisterButton();
     }
 
     private void setupLoginButton() {
-        Button loginButton = (Button)findViewById(R.id.button_login);
+        Button loginButton = (Button)findViewById(R.id.button_register);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText username = (EditText)findViewById(R.id.textfield_username);
-                EditText password = (EditText)findViewById(R.id.textfield_password);
+                EditText username = (EditText) findViewById(R.id.textfield_username);
+                EditText password = (EditText) findViewById(R.id.textfield_password);
                 try {
                     JSONObject json = new JSONObject();
                     json.put("username", username.getText().toString());
                     json.put("password", password.getText().toString());
 
-                    new login(LoginActivity.this).execute(json.toString());
+                    new register(RegisterActivity.this).execute(json.toString());
                 } catch (JSONException e) {
 
                 }
@@ -55,28 +54,16 @@ public class LoginActivity extends Activity {
         });
     }
 
-    private void setupRegisterButton() {
-        Button registerButton = (Button)findViewById(R.id.button_register);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                LoginActivity.this.startActivity(intent);
-            }
-        });
-    }
-
-    private class login extends AsyncTask<String, String, String> {
+    private class register extends AsyncTask<String, String, String> {
         Context context;
-        private login(Context context) {
+        private register(Context context) {
             this.context = context.getApplicationContext();
         }
 
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost post = new HttpPost(Constants.api_base + Constants.login);
+            HttpPost post = new HttpPost(Constants.api_base + Constants.register);
             try {
                 String postParams = params[0];
                 StringEntity se = new StringEntity(postParams);
@@ -100,10 +87,10 @@ public class LoginActivity extends Activity {
             try {
                 JSONObject result = new JSONObject(resultString);
                 if(!result.getString("type").equals("error")) {
-                    Intent intent = new Intent(context, MainActivity.class);
+                    Intent intent = new Intent(context, LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-                    LoginActivity.this.finish();
+                    RegisterActivity.this.finish();
                 } else {
                     Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
                 }
@@ -117,7 +104,7 @@ public class LoginActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_register, menu);
         return true;
     }
 
