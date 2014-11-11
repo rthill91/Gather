@@ -135,8 +135,8 @@
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="<--"
-                            android:id="@+id/btn_back"/>
+                            android:text="Back"
+                            android:id="@+id/btn_back" />
 
                         <Space
                             android:layout_width="wrap_content"
@@ -147,7 +147,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Profile"
-                            android:id="@+id/btn_profile"/>
+                            android:id="@+id/btn_profile" />
                     </LinearLayout>
                 </LinearLayout>
 
