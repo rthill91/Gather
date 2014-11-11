@@ -6,5 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="tab1_placeholder">Home</string>
     <string name="tab2_placeholder">Browse</string>
+    <string name="title_activity_login">Login</string>
+    <string name="user_hint">UserName</string>
+    <string name="pass_hint">Password</string>
 
 </resources>
