@@ -6,7 +6,13 @@
     <string name="action_settings">Settings</string>
     <string name="tab1_placeholder">Home</string>
     <string name="tab2_placeholder">Browse</string>
+<<<<<<< HEAD
     <string name="lbl_hostingEvents">Hosting</string>
     <string name="lbl_attendingEvents">Attending</string>
+=======
+    <string name="title_activity_login">Login</string>
+    <string name="user_hint">UserName</string>
+    <string name="pass_hint">Password</string>
+>>>>>>> e625f06e382bd3dd0632db7a61fe0019622de864
 
 </resources>
