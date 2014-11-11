@@ -14,6 +14,12 @@
     <string name="lbl_event4">Smash Bros Game Night</string>
     <string name="lbl_event5">UA Breakdance 2014</string>
 
+    <string name="lbl_search">Search</string>
+    <string name="lbl_categories">Search</string>
+    <string name="lbl_category1">Athletics</string>
+    <string name="lbl_category2">Gaming</string>
+    <string name="lbl_category3">Study</string>
+
     <string name="title_activity_login">Login</string>
     <string name="user_hint">UserName</string>
     <string name="pass_hint">Password</string>

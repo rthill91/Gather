@@ -157,12 +157,104 @@
                     android:layout_height="fill_parent"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="339dp"
+                        android:weightSum="1"
+                        android:layout_weight="0.91"
+                        android:id="@+id/i">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="@string/tab2_placeholder"
+                            android:id="@+id/textBrowse" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/lbl_search"
+                            android:id="@+id/txt_search"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="0.10"
+                            android:gravity="center"
+                            android:background="@drawable/recback"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="@string/lbl_categories"
+                            android:id="@+id/lbl_categories"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="0.10"
+                            android:background="#83a1a1a1"
+                            android:editable="false"
+                            android:gravity="center"
+                            android:singleLine="true"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/lbl_category1"
+                            android:id="@+id/lbl_category1"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="0.10"
+                            android:gravity="center"
+                            android:background="@drawable/recback"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/lbl_category2"
+                            android:id="@+id/lbl_category2"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="0.10"
+                            android:gravity="center"
+                            android:background="@drawable/recback"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/lbl_category3"
+                            android:id="@+id/lbl_category3"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="0.10"
+                            android:gravity="center"
+                            android:background="@drawable/recback"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/tab2_placeholder"
-                        android:id="@+id/textBrowse" />
+                        android:layout_gravity="center_horizontal"
+                        android:background="#78575757"
+                        android:weightSum="1">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Back"
+                            android:id="@+id/btn_back2" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.99"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Profile"
+                            android:id="@+id/btn_profile2" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
