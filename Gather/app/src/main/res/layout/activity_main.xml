@@ -36,9 +36,9 @@
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="339dp"
-                        android:background="#7974afa2"
                         android:weightSum="1"
-                        android:layout_weight="0.91">
+                        android:layout_weight="0.91"
+                        android:id="@+id/">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -50,16 +50,30 @@
                             android:layout_weight="0.10"
                             android:background="#83a1a1a1"
                             android:editable="false"
-                            android:enabled="true"
                             android:gravity="center"
                             android:singleLine="true"/>
 
-                        <ListView
-                            android:id="@+id/grd_ownedEvents"
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/lbl_event1"
+                            android:id="@+id/lbl_event1"
+                            android:layout_gravity="center_horizontal"
                             android:layout_weight="0.10"
-                            android:background="#fffff7a5"/>
+                            android:gravity="center"
+                            android:background="@drawable/recback"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/lbl_event2"
+                            android:id="@+id/lbl_event2"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="0.10"
+                            android:gravity="center"
+                            android:background="@drawable/recback"/>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -75,12 +89,38 @@
                             android:gravity="center"
                             android:singleLine="true"/>
 
-                        <ListView
-                            android:id="@+id/grd_yourEvents"
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/lbl_event3"
+                            android:id="@+id/lbl_event3"
+                            android:layout_gravity="center_horizontal"
                             android:layout_weight="0.10"
-                            android:background="#fffff7a5"/>
+                            android:gravity="center"
+                            android:background="@drawable/recback"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/lbl_event4"
+                            android:id="@+id/lbl_event4"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="0.10"
+                            android:gravity="center"
+                            android:background="@drawable/recback"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/lbl_event5"
+                            android:id="@+id/lbl_event5"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="0.10"
+                            android:gravity="center"
+                            android:background="@drawable/recback"/>
 
                     </LinearLayout>
 

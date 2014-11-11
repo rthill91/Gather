@@ -2,12 +2,17 @@
 <resources>
 
     <string name="app_name">Gather</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="tab1_placeholder">Home</string>
     <string name="tab2_placeholder">Browse</string>
+
     <string name="lbl_hostingEvents">Hosting</string>
     <string name="lbl_attendingEvents">Attending</string>
+    <string name="lbl_event1">Flag Football!</string>
+    <string name="lbl_event2">CS 464 Study Group</string>
+    <string name="lbl_event3">Secret Society Meeting</string>
+    <string name="lbl_event4">Smash Bros Game Night</string>
+    <string name="lbl_event5">UA Breakdance 2014</string>
 
     <string name="title_activity_login">Login</string>
     <string name="user_hint">UserName</string>
