@@ -3,6 +3,7 @@ package com.desperateundergadstudio.gather;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -100,6 +101,13 @@ public class LoginActivity extends Activity {
             try {
                 JSONObject result = new JSONObject(resultString);
                 if(!result.getString("type").equals("error")) {
+                    SharedPreferences prefs = getSharedPreferences(Constants.session_prefs, 0);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("SessionID", result.getString("message"));
+                    editor.commit();
+
+
+
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);

@@ -86,13 +86,12 @@ public class RegisterActivity extends Activity {
         protected void onPostExecute(String resultString) {
             try {
                 JSONObject result = new JSONObject(resultString);
+                Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
                 if(!result.getString("type").equals("error")) {
                     Intent intent = new Intent(context, LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                     RegisterActivity.this.finish();
-                } else {
-                    Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch(JSONException e) {
 
