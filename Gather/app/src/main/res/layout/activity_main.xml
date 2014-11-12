@@ -37,8 +37,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="339dp"
                         android:weightSum="1"
-                        android:layout_weight="0.91"
-                        android:id="@+id/">
+                        android:layout_weight="0.91">
 
                         <TextView
                             android:layout_width="match_parent"
