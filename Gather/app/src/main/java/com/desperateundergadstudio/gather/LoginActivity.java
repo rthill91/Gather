@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -26,21 +27,27 @@ import java.io.IOException;
 
 
 public class LoginActivity extends Activity {
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        setupLoginButton();
-        setupRegisterButton();
+//        setupLoginButton();
+//        setupRegisterButton();
+        setupButtons();
+        spinner = (ProgressBar)findViewById(R.id.progress_loginSpinner);
+        spinner.setVisibility(View.GONE);
     }
 
-    private void setupLoginButton() {
+    private void setupButtons() {
+        // Login Button
         Button loginButton = (Button)findViewById(R.id.button_login);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                spinner.setVisibility(View.VISIBLE);
                 EditText username = (EditText)findViewById(R.id.textfield_username);
                 EditText password = (EditText)findViewById(R.id.textfield_password);
                 try {
@@ -54,9 +61,8 @@ public class LoginActivity extends Activity {
                 }
             }
         });
-    }
 
-    private void setupRegisterButton() {
+        // Register Button
         Button registerButton = (Button)findViewById(R.id.button_register);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +72,9 @@ public class LoginActivity extends Activity {
                 LoginActivity.this.startActivity(intent);
             }
         });
+
     }
+
 
     private class login extends AsyncTask<String, String, String> {
         Context context;
@@ -101,12 +109,16 @@ public class LoginActivity extends Activity {
             try {
                 JSONObject result = new JSONObject(resultString);
                 if(!result.getString("type").equals("error")) {
+                    JSONObject message = result.getJSONObject("message");
                     SharedPreferences prefs = getSharedPreferences(Constants.session_prefs, 0);
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("SessionID", result.getString("message"));
+                    editor.putString("UserName", message.getString("UserName"));
+                    editor.putString("Picture", message.getString("Picture"));
+                    editor.putString("CurrentEvents", message.getString("CurrentEvents"));
+                    editor.putString("NotifyEvents", message.getString("NotifyEvents"));
+                    editor.putString("SessionID", message.getString("SessionID"));
+                    // could use .apply() for asynchronous storage write
                     editor.commit();
-
-
 
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -114,6 +126,7 @@ public class LoginActivity extends Activity {
                     LoginActivity.this.finish();
                 } else {
                     Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
+                    spinner.setVisibility(View.GONE);
                 }
             } catch(JSONException e) {
 
