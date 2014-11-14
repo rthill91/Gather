@@ -1,0 +1,102 @@
+body {
+    padding-top: 0px;    /*CHANGED BY NOAH*/
+    padding-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    background-color: #3e3e3e;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.jumbotron {
+    height: 450px;
+    margin-bottom: 0px;
+    background: #fb7878; /* Old browsers */
+    background: -moz-linear-gradient(45deg,  #fb7878 0%, #ff9f88 21%, #f5d3a3 44%, #9fbea6 73%, #6ec1a5 99%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#fb7878), color-stop(21%,#ff9f88), color-stop(44%,#f5d3a3), color-stop(73%,#9fbea6), color-stop(99%,#6ec1a5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(45deg,  #fb7878 0%,#ff9f88 21%,#f5d3a3 44%,#9fbea6 73%,#6ec1a5 99%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(45deg,  #fb7878 0%,#ff9f88 21%,#f5d3a3 44%,#9fbea6 73%,#6ec1a5 99%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(45deg,  #fb7878 0%,#ff9f88 21%,#f5d3a3 44%,#9fbea6 73%,#6ec1a5 99%); /* IE10+ */
+    background: linear-gradient(45deg,  #fb7878 0%,#ff9f88 21%,#f5d3a3 44%,#9fbea6 73%,#6ec1a5 99%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fb7878', endColorstr='#6ec1a5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    color:white;
+    
+    font-family: 'Open Sans', sans-serif;
+}
+
+    .jumbotron .container {
+        max-height: 150px;
+        margin-top: 250px;
+        
+    font-family: 'Open Sans', sans-serif;
+    }
+
+.diamondInfoDiv {
+    border: 1px solid white;
+    width: 100px;
+    height: 100px;
+    font-size: small;
+    margin-top: 50%;
+    border-radius: 50%;
+    text-align: center;
+    padding-top:35%;
+}
+.diamondInfoDiv a{
+   /* margin-top:35%;
+    margin-left:5%;
+    /*   
+    -moz-transform:rotate(-45deg);
+    -webkit-transform:rotate(-45deg);
+    -o-transform:rotate(-45deg);
+    -ms-transform:rotate(-45deg);
+        */
+}
+
+.additionalInfo {
+    float: right;
+}
+
+.additionalInfo a{
+    color:white;
+}
+    .additionalInfo a:hover, .additionalInfo a:focus, .additionalInfo a:active {
+        text-decoration:none;
+        cursor: pointer;
+   }
+.additionalInfo div:hover, .additionalInfo div:focus, .additionalInfo div:active {
+    text-shadow: 0 0 #FFFFFF;
+    -moz-box-shadow:  inset 0 0 25px 0 #FFFFFF;
+    -webkit-box-shadow:   0 0 25px 0 #FFFFFF;
+    box-shadow:  0 0 25px 0 #FFFFFF;
+
+    cursor: pointer;
+   }
+
+.navbar-fixed-top {
+    right: 0;
+    left: 0;
+    border-width: 0 0 1px;
+    position:relative;
+}
+
