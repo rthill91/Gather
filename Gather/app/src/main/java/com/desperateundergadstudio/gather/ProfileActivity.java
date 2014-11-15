@@ -97,9 +97,9 @@ public class ProfileActivity extends Activity {
                     editor.commit();
 
                     Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(intent);
-                    ProfileActivity.this.finish();
+//                    ProfileActivity.this.finish();
                 } else {
                     Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
                 }

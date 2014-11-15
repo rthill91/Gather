@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -47,6 +48,8 @@ public class LoginActivity extends Activity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 spinner.setVisibility(View.VISIBLE);
                 EditText username = (EditText)findViewById(R.id.textfield_username);
                 EditText password = (EditText)findViewById(R.id.textfield_password);
@@ -74,6 +77,15 @@ public class LoginActivity extends Activity {
         });
 
     }
+
+    // Override back button
+//    public void onBackPressed() {
+//        this.finish();
+//        Intent intent = new Intent(Intent.ACTION_MAIN);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        startActivity(intent);
+//    }
 
 
     private class login extends AsyncTask<String, String, String> {
@@ -114,8 +126,6 @@ public class LoginActivity extends Activity {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("UserName", message.getString("UserName"));
                     editor.putString("Picture", message.getString("Picture"));
-                    editor.putString("CurrentEvents", message.getString("CurrentEvents"));
-                    editor.putString("NotifyEvents", message.getString("NotifyEvents"));
                     editor.putString("SessionID", message.getString("SessionID"));
                     // could use .apply() for asynchronous storage write
                     editor.commit();
@@ -123,13 +133,14 @@ public class LoginActivity extends Activity {
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-                    LoginActivity.this.finish();
+//                    LoginActivity.this.finish();
                 } else {
                     Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
                     spinner.setVisibility(View.GONE);
                 }
             } catch(JSONException e) {
-
+                Toast.makeText(getApplicationContext(), "DEBUG: SOME ERROR", Toast.LENGTH_LONG).show();
+                spinner.setVisibility(View.GONE);
             }
         }
     }

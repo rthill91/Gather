@@ -92,6 +92,10 @@ public class MainActivity extends Activity implements LocationListener {
 
     }
 
+    public void onBackPressed() {
+        // Do nothing for the moment
+    }
+
     private void launchProfileActivity() {
         Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -100,7 +104,12 @@ public class MainActivity extends Activity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        GoogleMap mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        GoogleMap mMap = null;
+        try {
+            mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        } catch(Exception e) {
+
+        }
         if(mMap != null)
         {
             drawMarker(location);
