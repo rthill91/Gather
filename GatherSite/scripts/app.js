@@ -8,16 +8,18 @@ app.controller('registerController', function($scope, $log) {
 	$scope.user = {};
 
 	function validateForm() {
-		if(angular.isUndefinedOrNull($scope.user.username) &&
-		angular.isUndefinedOrNull($scope.user.password) &&
-		$scope.user.password === $scope.confirmPassword) {
+		if(($scope.user.username) &&
+		($scope.user.password) &&
+		($scope.user.password === $scope.confirmPassword)) {
 			return true;
 		} else return false;
 	}
 
 	$scope.submitForm = function() {
 		if(validateForm()) {
-			$log.debug("Send To API");
+			$log.debug("Send Register To API");
+		} else {
+			$log.debug("Invalid Credentials");
 		}
 	}
 });
@@ -25,9 +27,18 @@ app.controller('registerController', function($scope, $log) {
 app.controller('loginController', function($scope, $log) {
 	$scope.login = {};
 
+	function validateForm() {
+		if(($scope.login.username) &&
+		($scope.login.password)) {
+			return true;
+		} else return false;
+	}
+	
 	$scope.submitForm = function() {
 		if(validateForm()) {
-			$log.debug("Send To API");
+			$log.debug("Send Login To API");
+		} else {
+			$log.debug("Invalid Credentials");
 		}
 	}
 });
