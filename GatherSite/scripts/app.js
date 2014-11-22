@@ -18,13 +18,7 @@ app.controller('registerController', function($scope, $http, $log) {
 
 	$scope.submitForm = function() {
 		if(validateForm()) {
-		$http.get("http://rthill91.synology.me:8081")
-		.success(function(data, status, headers, config) {
-			$log.log(data);
-		})
-		.error(function(data, status, headers, config) {
-			$log.error(data);
-		});
+			$log.debug("success");
 		} else {
 			$log.debug("Invalid Credentials");
 		}
