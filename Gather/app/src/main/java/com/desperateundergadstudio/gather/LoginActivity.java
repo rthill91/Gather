@@ -40,6 +40,12 @@ public class LoginActivity extends Activity {
         setupButtons();
         spinner = (ProgressBar)findViewById(R.id.progress_loginSpinner);
         spinner.setVisibility(View.GONE);
+        //TODO: Debug code, remove this later
+        EditText username = (EditText)findViewById(R.id.textfield_username);
+        EditText password = (EditText)findViewById(R.id.textfield_password);
+        username.setText("user");
+        password.setText("user");
+        //TODO: END todo
     }
 
     private void setupButtons() {
@@ -111,7 +117,7 @@ public class LoginActivity extends Activity {
                 return EntityUtils.toString(response.getEntity());
 
             } catch (IOException e) {
-
+                e.printStackTrace();
             }
             return null;
         }
@@ -127,8 +133,7 @@ public class LoginActivity extends Activity {
                     editor.putString("UserName", message.getString("UserName"));
                     editor.putString("Picture", message.getString("Picture"));
                     editor.putString("SessionID", message.getString("SessionID"));
-                    // could use .apply() for asynchronous storage write
-                    editor.commit();
+                    editor.apply();
 
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -139,6 +144,7 @@ public class LoginActivity extends Activity {
                     spinner.setVisibility(View.GONE);
                 }
             } catch(JSONException e) {
+                e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "DEBUG: SOME ERROR", Toast.LENGTH_LONG).show();
                 spinner.setVisibility(View.GONE);
             }

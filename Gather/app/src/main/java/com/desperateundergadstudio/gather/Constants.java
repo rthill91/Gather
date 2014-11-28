@@ -8,5 +8,6 @@ public class Constants {
     static String login = "/user/login";
     static String logout = "/user/logout";
     static String register = "/user/register";
+    static String getAttendingEvents = "/events/user/attending";
     static String session_prefs = "Session";
 }

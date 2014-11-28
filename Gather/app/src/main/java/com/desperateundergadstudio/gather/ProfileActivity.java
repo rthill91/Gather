@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -26,16 +27,21 @@ import java.io.IOException;
 
 public class ProfileActivity extends Activity {
 
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        prefs = getSharedPreferences(Constants.session_prefs, 0);
+
         setupLogoutButton();
+        populateUserInfo();
     }
 
     private void setupLogoutButton() {
-        Button logoutButton = (Button)findViewById(R.id.button_logout);
+        Button logoutButton = (Button)findViewById(R.id.profile_button_logout);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +60,11 @@ public class ProfileActivity extends Activity {
                 }
             }
         });
+    }
+
+    private void populateUserInfo() {
+        TextView helloText = (TextView)findViewById(R.id.profile_textview_UserName);
+        helloText.setText("Hello " + prefs.getString("UserName", "DEFAULT") + "!");
     }
 
     private class logout extends AsyncTask<String, String, String> {
@@ -94,7 +105,7 @@ public class ProfileActivity extends Activity {
                     editor.remove("CurrentEvents");
                     editor.remove("NotifyEvents");
                     editor.remove("SessionID");
-                    editor.commit();
+                    editor.apply();
 
                     Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
