@@ -4,13 +4,12 @@
     <string name="app_name">Gather</string>
     <string name="action_settings">Settings</string>
     <string name="action_profile">Profile</string>
+    <string name="action_refresh">Refresh</string>
     <string name="tab1_placeholder">Home</string>
     <string name="tab2_placeholder">Browse</string>
-
     <string name="title_activity_login">Login</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_profile">Profile</string>
-
     <string name="lbl_hostingEvents">Hosting</string>
     <string name="lbl_attendingEvents">Attending</string>
     <string name="lbl_event1">Flag Football!</string>
@@ -26,5 +25,6 @@
     <string name="user_hint">UserName</string>
     <string name="pass_hint">Password</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_event">EventActivity</string>
 
 </resources>

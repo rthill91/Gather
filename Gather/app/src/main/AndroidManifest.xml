@@ -43,6 +43,10 @@
             android:name="com.desperateundergadstudio.gather.ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>
+        <activity
+            android:name="com.desperateundergadstudio.gather.EventActivity"
+            android:label="@string/title_activity_event" >
+        </activity>
     </application>
 
 </manifest>
