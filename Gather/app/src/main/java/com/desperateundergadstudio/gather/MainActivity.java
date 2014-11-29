@@ -8,7 +8,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,6 +40,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements LocationListener {
 
+    private JSONObject currentUser;
+
     private ProgressBar homeSpinner;
     private ProgressBar browseSpinner;
     private SharedPreferences prefs;
@@ -48,12 +49,16 @@ public class MainActivity extends Activity implements LocationListener {
 
     private ListView homeList;
     private MainListAdapter arrayAdapter;
-    ArrayList<JSONObject> evnts = null;
+    ArrayList<JSONObject> events = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            currentUser = new JSONObject(getIntent().getStringExtra("currentUser"));
+        } catch (JSONException e) {}
 
         TabHost tabHost = (TabHost)findViewById(R.id.tabHost);
         tabHost.setup();
@@ -79,36 +84,26 @@ public class MainActivity extends Activity implements LocationListener {
         tabSpec.setIndicator("Map");
         tabHost.addTab(tabSpec);
 
+        prefs = getSharedPreferences(Constants.session_prefs, 0);
 
-        try {
-            //Create event list
-            homeList = (ListView)findViewById(R.id.lst_mainList);
-            evnts = new ArrayList<JSONObject>();
-            arrayAdapter = new MainListAdapter(MainActivity.this, R.layout.listitems, evnts);
-            homeList.setAdapter(arrayAdapter);
-            homeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Intent intent = new Intent(getApplicationContext(), EventActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("currentEvent", homeList.getItemAtPosition(i).toString());
-                    getApplicationContext().startActivity(intent);
-                }
-            });
+        //Create event list
+        homeList = (ListView)findViewById(R.id.lst_mainList);
+        events = new ArrayList<JSONObject>();
+        arrayAdapter = new MainListAdapter(MainActivity.this, R.layout.listitems, events);
+        homeList.setAdapter(arrayAdapter);
+        homeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), EventActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("currentEvent", homeList.getItemAtPosition(i).toString());
+                getApplicationContext().startActivity(intent);
+            }
+        });
 
-
-
-            prefs = getSharedPreferences(Constants.session_prefs, 0);
-            JSONObject json = new JSONObject();
-            json.put("username", prefs.getString("UserName", null));
-            json.put("sessionid", prefs.getString("SessionID", null));
-
-            new loadAttendingEvents(MainActivity.this).execute(json.toString());
+        new loadAttendingEvents(MainActivity.this).execute(currentUser.toString());
 
 
-        } catch (JSONException e) {
-
-        }
 //        LocationManager locationManager;
 //        // Get the LocationManager Object
 //        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
@@ -146,13 +141,7 @@ public class MainActivity extends Activity implements LocationListener {
                 launchProfileActivity();
                 return true;
             case R.id.action_refresh:
-                JSONObject json = new JSONObject();
-                try {
-                    evnts.clear();
-                    json.put("username", prefs.getString("UserName", null));
-                    json.put("sessionid", prefs.getString("SessionID", null));
-                } catch (JSONException e) {}
-                new loadAttendingEvents(MainActivity.this).execute(json.toString());
+                new loadAttendingEvents(MainActivity.this).execute(currentUser.toString());
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -168,7 +157,7 @@ public class MainActivity extends Activity implements LocationListener {
             for(int i=0; i<attendingEvents.length(); i++) {
                 JSONObject j = new JSONObject();
                 j = attendingEvents.getJSONObject(i);
-                evnts.add(j);
+                events.add(j);
             }
         } catch(Exception e) {
 

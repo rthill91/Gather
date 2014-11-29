@@ -135,8 +135,13 @@ public class LoginActivity extends Activity {
                     editor.putString("SessionID", message.getString("SessionID"));
                     editor.apply();
 
+                    JSONObject json = new JSONObject();
+                    json.put("username", message.getString("UserName"));
+                    json.put("sessionid", message.getString("SessionID"));
+
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("currentUser", json.toString());
                     context.startActivity(intent);
 //                    LoginActivity.this.finish();
                 } else {
