@@ -8,10 +8,12 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -33,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class MainActivity extends Activity implements LocationListener {
@@ -41,6 +44,10 @@ public class MainActivity extends Activity implements LocationListener {
     private ProgressBar browseSpinner;
     private SharedPreferences prefs;
     private JSONArray attendingEvents;
+
+    private ListView homeList;
+    private MainListAdapter arrayAdapter;
+    ArrayList<JSONObject> evnts = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +86,14 @@ public class MainActivity extends Activity implements LocationListener {
             json.put("sessionid", prefs.getString("SessionID", null));
 
             new loadAttendingEvents(MainActivity.this).execute(json.toString());
+
+
+            //Create event list
+            homeList = (ListView)findViewById(R.id.lst_mainList);
+            evnts = new ArrayList<JSONObject>();
+            arrayAdapter = new MainListAdapter(MainActivity.this, R.layout.listitems, evnts);
+            homeList.setAdapter(arrayAdapter);
+
         } catch (JSONException e) {
 
         }
@@ -128,6 +143,23 @@ public class MainActivity extends Activity implements LocationListener {
         // Do nothing for the moment
     }
 
+    private void populateHomeList() {
+        try {
+//            for(JSONObject j : attendingEvents) {
+//                evnts.add(j);
+//            }
+//            arrayAdapter.notifyDataSetChanged();
+
+            for(int i=0; i<attendingEvents.length(); i++) {
+                JSONObject j = new JSONObject();
+                j = attendingEvents.getJSONObject(i);
+                evnts.add(j);
+            }
+        } catch(Exception e) {
+
+        }
+    }
+
     private void launchProfileActivity() {
         Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -173,6 +205,7 @@ public class MainActivity extends Activity implements LocationListener {
                     editor.putString("AttendingEvents", result.getString("message"));
                     // could use .apply() for asynchronous storage write
                     editor.apply();
+                    populateHomeList();
                 } else {
                     Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
                 }
