@@ -141,6 +141,7 @@ public class MainActivity extends Activity implements LocationListener {
                 launchProfileActivity();
                 return true;
             case R.id.action_refresh:
+                homeSpinner.setVisibility(View.VISIBLE);
                 new loadAttendingEvents(MainActivity.this).execute(currentUser.toString());
             default:
                 return super.onOptionsItemSelected(item);
@@ -154,11 +155,13 @@ public class MainActivity extends Activity implements LocationListener {
 
     private void populateHomeList() {
         try {
+            events.clear();
+            JSONObject j;
             for(int i=0; i<attendingEvents.length(); i++) {
-                JSONObject j = new JSONObject();
                 j = attendingEvents.getJSONObject(i);
                 events.add(j);
             }
+            arrayAdapter.notifyDataSetChanged();
         } catch(Exception e) {
 
         }
@@ -207,7 +210,7 @@ public class MainActivity extends Activity implements LocationListener {
                     attendingEvents = new JSONArray(result.getString("message"));
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("AttendingEvents", result.getString("message"));
-                    // could use .apply() for asynchronous storage write
+
                     editor.apply();
                     populateHomeList();
                 } else {
