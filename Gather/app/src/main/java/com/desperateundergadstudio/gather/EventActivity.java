@@ -21,8 +21,8 @@ public class EventActivity extends Activity {
 
         try {
             event = new JSONObject(getIntent().getStringExtra("currentEvent"));
-            TextView eventTitle = (TextView)findViewById(R.id.text_eventTitle);
-            TextView eventDescription = (TextView)findViewById(R.id.text_eventDescription);
+            TextView eventTitle = (TextView)findViewById(R.id.event_textView_eventTitle);
+            TextView eventDescription = (TextView)findViewById(R.id.event_textView_eventDescription);
             eventTitle.setText(event.getString("Title"));
             eventDescription.setText(event.getString("Description"));
         } catch(JSONException e) {

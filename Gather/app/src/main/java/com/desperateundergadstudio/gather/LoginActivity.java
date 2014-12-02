@@ -35,30 +35,28 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        setupLoginButton();
-//        setupRegisterButton();
-        setupButtons();
-        spinner = (ProgressBar)findViewById(R.id.progress_loginSpinner);
-        spinner.setVisibility(View.GONE);
         //TODO: Debug code, remove this later
-        EditText username = (EditText)findViewById(R.id.textfield_username);
-        EditText password = (EditText)findViewById(R.id.textfield_password);
+        EditText username = (EditText)findViewById(R.id.login_editText_username);
+        EditText password = (EditText)findViewById(R.id.login_editText_password);
         username.setText("user");
         password.setText("user");
         //TODO: END todo
+        setupButtons();
+        spinner = (ProgressBar)findViewById(R.id.login_progress_spinner);
+        spinner.setVisibility(View.GONE);
     }
 
     private void setupButtons() {
         // Login Button
-        Button loginButton = (Button)findViewById(R.id.button_login);
+        Button loginButton = (Button)findViewById(R.id.login_button_login);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 spinner.setVisibility(View.VISIBLE);
-                EditText username = (EditText)findViewById(R.id.textfield_username);
-                EditText password = (EditText)findViewById(R.id.textfield_password);
+                EditText username = (EditText)findViewById(R.id.login_editText_username);
+                EditText password = (EditText)findViewById(R.id.login_editText_password);
                 try {
                     JSONObject json = new JSONObject();
                     json.put("username", username.getText().toString());
@@ -72,7 +70,7 @@ public class LoginActivity extends Activity {
         });
 
         // Register Button
-        Button registerButton = (Button)findViewById(R.id.button_register);
+        Button registerButton = (Button)findViewById(R.id.login_button_register);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

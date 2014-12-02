@@ -63,7 +63,7 @@ public class ProfileActivity extends Activity {
     }
 
     private void populateUserInfo() {
-        TextView helloText = (TextView)findViewById(R.id.profile_textview_UserName);
+        TextView helloText = (TextView)findViewById(R.id.profile_textView_username);
         helloText.setText("Hello " + prefs.getString("UserName", "DEFAULT") + "!");
     }
 

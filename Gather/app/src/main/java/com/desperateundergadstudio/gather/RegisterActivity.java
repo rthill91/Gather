@@ -35,12 +35,12 @@ public class RegisterActivity extends Activity {
     }
 
     private void setupLoginButton() {
-        Button loginButton = (Button)findViewById(R.id.button_register);
+        Button loginButton = (Button)findViewById(R.id.register_button_register);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText username = (EditText) findViewById(R.id.textfield_username);
-                EditText password = (EditText) findViewById(R.id.textfield_password);
+                EditText username = (EditText) findViewById(R.id.register_editText_username);
+                EditText password = (EditText) findViewById(R.id.register_editText_password);
                 try {
                     JSONObject json = new JSONObject();
                     json.put("username", username.getText().toString());

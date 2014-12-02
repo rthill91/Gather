@@ -6,10 +6,10 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtTitleText"/>
+        android:id="@+id/listItem_textView_title"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtDescriptionText"/>
+        android:id="@+id/listItem_textView_description"/>
 
 </LinearLayout>

@@ -56,12 +56,12 @@ public class CreateEventActivity extends Activity {
 
     private void setupButtons() {
         // Submit Button
-        Button submitButton = (Button)findViewById(R.id.button_submit);
+        Button submitButton = (Button)findViewById(R.id.createEvent_button_submit);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText eventTitle = (EditText)findViewById(R.id.editText_eventDescription);
-                EditText eventDescription = (EditText)findViewById(R.id.editText_eventDescription);
+                EditText eventTitle = (EditText)findViewById(R.id.createEvent_editText_eventDescription);
+                EditText eventDescription = (EditText)findViewById(R.id.createEvent_editText_eventDescription);
                 try {
                     JSONObject json = new JSONObject();
                     json.put("eventTitle", eventTitle.getText().toString());
@@ -75,7 +75,7 @@ public class CreateEventActivity extends Activity {
         });
 
         // Date Button
-        final Button dateButton = (Button)findViewById(R.id.button_date);
+        final Button dateButton = (Button)findViewById(R.id.createEvent_button_date);
 
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +86,7 @@ public class CreateEventActivity extends Activity {
         });
 
         // Time Button
-        final Button timeButton = (Button)findViewById(R.id.button_time);
+        final Button timeButton = (Button)findViewById(R.id.createEvent_button_time);
 
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +174,7 @@ public class CreateEventActivity extends Activity {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            Button dateButton = (Button)this.getActivity().findViewById(R.id.button_date);
+            Button dateButton = (Button)this.getActivity().findViewById(R.id.createEvent_button_date);
             dateButton.setText(String.valueOf(month+1) + "/" + String.valueOf(day) + "/" + String.valueOf(year));
         }
     }
@@ -189,7 +189,7 @@ public class CreateEventActivity extends Activity {
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            Button timeButton = (Button)this.getActivity().findViewById(R.id.button_time);
+            Button timeButton = (Button)this.getActivity().findViewById(R.id.createEvent_button_time);
             timeButton.setText(timeFormatter(hourOfDay, minute, DateFormat.is24HourFormat(getActivity())));
         }
 
