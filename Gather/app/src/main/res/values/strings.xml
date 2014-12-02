@@ -26,5 +26,6 @@
     <string name="pass_hint">Password</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_event">EventActivity</string>
+    <string name="title_activity_create_event">CreateEventActivity</string>
 
 </resources>

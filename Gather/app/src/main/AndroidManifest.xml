@@ -47,6 +47,10 @@
             android:name="com.desperateundergadstudio.gather.EventActivity"
             android:label="@string/title_activity_event" >
         </activity>
+        <activity
+            android:name="com.desperateundergadstudio.gather.CreateEventActivity"
+            android:label="@string/title_activity_create_event" >
+        </activity>
     </application>
 
 </manifest>

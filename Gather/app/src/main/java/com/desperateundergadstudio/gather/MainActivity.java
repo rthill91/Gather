@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
@@ -56,6 +57,8 @@ public class MainActivity extends Activity implements LocationListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        prefs = getSharedPreferences(Constants.session_prefs, 0);
+
         try {
             currentUser = new JSONObject(getIntent().getStringExtra("currentUser"));
         } catch (JSONException e) {}
@@ -84,7 +87,7 @@ public class MainActivity extends Activity implements LocationListener {
         tabSpec.setIndicator("Map");
         tabHost.addTab(tabSpec);
 
-        prefs = getSharedPreferences(Constants.session_prefs, 0);
+        setupButtons();
 
         //Create event list
         homeList = (ListView)findViewById(R.id.lst_mainList);
@@ -115,6 +118,19 @@ public class MainActivity extends Activity implements LocationListener {
 //        Location location = locationManager.getLastKnownLocation(provider);
 //        // request that the provider send this activity GPS updates every 20 seconds
 //        locationManager.requestLocationUpdates(provider, 20000, 0, this);
+    }
+
+    private void setupButtons() {
+        Button createEvent = (Button)findViewById(R.id.button_createEvent);
+        createEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreateEventActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("currentUser", currentUser.toString());
+                getApplicationContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
