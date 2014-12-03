@@ -185,7 +185,9 @@ public class MainActivity extends Activity implements LocationListener {
                 return true;
             case R.id.action_refresh:
                 homeSpinner.setVisibility(View.VISIBLE);
+                browseSpinner.setVisibility(View.VISIBLE);
                 new loadAttendingEvents(MainActivity.this).execute(currentUser.toString());
+                new loadAllEvents(MainActivity.this).execute(currentUser.toString());
             default:
                 return super.onOptionsItemSelected(item);
         }
