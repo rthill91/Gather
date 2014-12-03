@@ -145,6 +145,7 @@ public class LoginActivity extends Activity {
                     editor.putString("UserName", message.getString("UserName"));
                     editor.putString("Picture", message.getString("Picture"));
                     editor.putString("SessionID", message.getString("SessionID"));
+                    editor.putString("UserID", message.getString("UserID"));
                     editor.apply();
 
                     JSONObject json = new JSONObject();
@@ -155,14 +156,13 @@ public class LoginActivity extends Activity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("currentUser", json.toString());
                     context.startActivity(intent);
-//                    LoginActivity.this.finish();
                 } else {
                     Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
                     spinner.setVisibility(View.GONE);
                 }
             } catch(Exception e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "DEBUG: SOME ERROR", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "ERROR: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 spinner.setVisibility(View.GONE);
             }
         }

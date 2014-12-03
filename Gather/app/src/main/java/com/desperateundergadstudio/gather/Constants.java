@@ -12,5 +12,7 @@ public class Constants {
     static String getAllEvents = "/events/all";
     static String createEvent = "/events/create";
     static String getEventComments = "/events/comments";
+    static String addComment = "/events/addComment";
+    static String attendEvent = "/events/setAttend";
     static String session_prefs = "Session";
 }

@@ -45,7 +45,31 @@
         android:layout_height="wrap_content"
         android:id="@+id/event_listView_comments"
         android:layout_below="@+id/event_textView_commentHeader"
+        android:layout_above="@+id/event_linearLayout_buttonRow"
         android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_linearLayout_buttonRow"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Attend"
+            android:id="@+id/event_button_attend" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Comment"
+            android:id="@+id/event_button_comment"/>
+
+    </LinearLayout>
+
 
     <!--<ScrollView-->
         <!--android:layout_width="fill_parent"-->
