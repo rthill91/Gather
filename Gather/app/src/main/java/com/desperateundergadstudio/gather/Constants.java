@@ -11,5 +11,6 @@ public class Constants {
     static String getAttendingEvents = "/events/user/attending";
     static String getAllEvents = "/events/all";
     static String createEvent = "/events/create";
+    static String getEventComments = "/events/comments";
     static String session_prefs = "Session";
 }

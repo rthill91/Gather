@@ -19,8 +19,6 @@ import java.util.List;
  */
 public class MainListAdapter extends ArrayAdapter<JSONObject> {
     int resource;
-//    String response;
-//    Context context;
 
     public MainListAdapter(Context context, int resource, List<JSONObject> items) {
         super(context, resource, items);
@@ -46,7 +44,11 @@ public class MainListAdapter extends ArrayAdapter<JSONObject> {
         TextView eventDescription = (TextView)eventView.findViewById(R.id.listItem_textView_description);
         try {
             eventTitle.setText(o1.getString("Title"));
-            eventDescription.setText(o1.getString("Description"));
+            String desc = o1.getString("Description");
+            if(desc.length() < 50)
+                eventDescription.setText(o1.getString("Description"));
+            else
+                eventDescription.setText(desc.substring(0, 50));
         } catch(JSONException e) {
 
         }

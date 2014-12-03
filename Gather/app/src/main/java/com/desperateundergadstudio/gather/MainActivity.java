@@ -101,7 +101,7 @@ public class MainActivity extends Activity implements LocationListener {
         //Create home event list
         homeList = (ListView)findViewById(R.id.main_listView_homeList);
         homeEvents = new ArrayList<JSONObject>();
-        homeArrayAdapter = new MainListAdapter(MainActivity.this, R.layout.listitems, homeEvents);
+        homeArrayAdapter = new MainListAdapter(MainActivity.this, R.layout.main_listitems, homeEvents);
         homeList.setAdapter(homeArrayAdapter);
         homeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -118,7 +118,7 @@ public class MainActivity extends Activity implements LocationListener {
         //Create browse event list
         browseList = (ListView)findViewById(R.id.main_listView_browseList);
         browseEvents = new ArrayList<JSONObject>();
-        browseArrayAdapter = new MainListAdapter(MainActivity.this, R.layout.listitems, browseEvents);
+        browseArrayAdapter = new MainListAdapter(MainActivity.this, R.layout.main_listitems, browseEvents);
         browseList.setAdapter(browseArrayAdapter);
         browseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

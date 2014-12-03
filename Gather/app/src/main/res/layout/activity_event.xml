@@ -17,11 +17,43 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Current Number Of Attendees: 0"
+        android:id="@+id/event_textView_attendees"
+        android:layout_below="@+id/event_textView_eventTitle"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="DESCRIPTION"
         android:id="@+id/event_textView_eventDescription"
         android:layout_marginTop="33dp"
-        android:layout_below="@+id/event_textView_eventTitle"
+        android:layout_below="@+id/event_textView_attendees"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comments"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/event_textView_commentHeader"
+        android:layout_below="@+id/event_textView_eventDescription"/>
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_listView_comments"
+        android:layout_below="@+id/event_textView_commentHeader"
+        android:layout_marginTop="10dp"/>
+
+    <!--<ScrollView-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:id="@+id/scrollView"-->
+        <!--android:layout_marginTop="33dp"-->
+        <!--android:layout_below="@+id/event_textView_eventDescription"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true" />-->
 
 </RelativeLayout>
