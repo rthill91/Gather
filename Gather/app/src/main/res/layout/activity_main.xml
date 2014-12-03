@@ -34,7 +34,7 @@
                     <ListView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/lst_mainList"/>
+                        android:id="@+id/main_listView_homeList"/>
 
                     <ProgressBar
                         android:layout_width="wrap_content"
@@ -62,6 +62,11 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:orientation="vertical">
+
+                    <ListView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/main_listView_browseList"/>
 
                     <ProgressBar
                         android:layout_width="wrap_content"

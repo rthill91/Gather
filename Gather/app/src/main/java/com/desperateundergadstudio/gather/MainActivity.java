@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -48,11 +49,16 @@ public class MainActivity extends Activity implements LocationListener {
     private ProgressBar homeSpinner;
     private ProgressBar browseSpinner;
     private SharedPreferences prefs;
-    private JSONArray attendingEvents;
 
+    private JSONArray attendingEvents;
     private ListView homeList;
-    private MainListAdapter arrayAdapter;
-    ArrayList<JSONObject> events = null;
+    private MainListAdapter homeArrayAdapter;
+    private ArrayList<JSONObject> homeEvents = null;
+
+    private JSONArray allEvents;
+    private ListView browseList;
+    private MainListAdapter browseArrayAdapter;
+    private ArrayList<JSONObject> browseEvents = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +80,7 @@ public class MainActivity extends Activity implements LocationListener {
         tabSpec.setIndicator("Home");
         tabHost.addTab(tabSpec);
         homeSpinner = (ProgressBar)findViewById(R.id.progress_homeSpinner);
+        homeSpinner.setVisibility(View.GONE);
 
         // Browse Tab
         tabSpec = tabHost.newTabSpec("browse");
@@ -91,11 +98,11 @@ public class MainActivity extends Activity implements LocationListener {
 
         setupButtons();
 
-        //Create event list
-        homeList = (ListView)findViewById(R.id.lst_mainList);
-        events = new ArrayList<JSONObject>();
-        arrayAdapter = new MainListAdapter(MainActivity.this, R.layout.listitems, events);
-        homeList.setAdapter(arrayAdapter);
+        //Create home event list
+        homeList = (ListView)findViewById(R.id.main_listView_homeList);
+        homeEvents = new ArrayList<JSONObject>();
+        homeArrayAdapter = new MainListAdapter(MainActivity.this, R.layout.listitems, homeEvents);
+        homeList.setAdapter(homeArrayAdapter);
         homeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -107,6 +114,24 @@ public class MainActivity extends Activity implements LocationListener {
         });
 
         new loadAttendingEvents(MainActivity.this).execute(currentUser.toString());
+
+        //Create browse event list
+        browseList = (ListView)findViewById(R.id.main_listView_browseList);
+        browseEvents = new ArrayList<JSONObject>();
+        browseArrayAdapter = new MainListAdapter(MainActivity.this, R.layout.listitems, browseEvents);
+        browseList.setAdapter(browseArrayAdapter);
+        browseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), EventActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("currentEvent", browseList.getItemAtPosition(i).toString());
+                getApplicationContext().startActivity(intent);
+            }
+        });
+
+        new loadAllEvents(MainActivity.this).execute(currentUser.toString());
+
 
 
 //        LocationManager locationManager;
@@ -173,13 +198,27 @@ public class MainActivity extends Activity implements LocationListener {
 
     private void populateHomeList() {
         try {
-            events.clear();
+            homeEvents.clear();
             JSONObject j;
             for(int i=0; i<attendingEvents.length(); i++) {
                 j = attendingEvents.getJSONObject(i);
-                events.add(j);
+                homeEvents.add(j);
             }
-            arrayAdapter.notifyDataSetChanged();
+            homeArrayAdapter.notifyDataSetChanged();
+        } catch(Exception e) {
+
+        }
+    }
+
+    private void populateBrowseList() {
+        try {
+            browseEvents.clear();
+            JSONObject j;
+            for(int i=0; i<allEvents.length(); i++) {
+                j = allEvents.getJSONObject(i);
+                browseEvents.add(j);
+            }
+            browseArrayAdapter.notifyDataSetChanged();;
         } catch(Exception e) {
 
         }
@@ -191,7 +230,6 @@ public class MainActivity extends Activity implements LocationListener {
         getApplicationContext().startActivity(intent);
     }
 
-    //Event Loading Functions
     private class loadAttendingEvents extends AsyncTask<String, String, String> {
         Context context;
         private loadAttendingEvents(Context context){
@@ -244,16 +282,66 @@ public class MainActivity extends Activity implements LocationListener {
                     editor.apply();
                     populateHomeList();
                 } else {
-                    Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, result.getString("message"), Toast.LENGTH_LONG).show();
                 }
             } catch(JSONException e) {
-                Toast.makeText(getApplicationContext(), "DEBUG: SOME ERROR", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "DEBUG: SOME ERROR", Toast.LENGTH_LONG).show();
                 homeSpinner.setVisibility(View.GONE);
             }
             homeSpinner.setVisibility(View.GONE);
         }
     }
 
+    private class loadAllEvents extends AsyncTask<String, String, String> {
+        Context context;
+        private loadAllEvents(Context context) {
+            this.context = getApplicationContext();
+        }
+
+        protected String doInBackground(String... params) {
+            if(noInternet()) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this, "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+                        browseSpinner.setVisibility(View.GONE);
+                    }
+                });
+                this.cancel(true);
+            }
+            if(!isCancelled()) {
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpGet get = new HttpGet(Constants.api_base + Constants.getAllEvents);
+                try {
+                    HttpResponse response = httpclient.execute(get);
+                    return EntityUtils.toString(response.getEntity());
+                } catch (IOException e) {
+
+                }
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String resultString) {
+            try {
+                JSONObject result = new JSONObject(resultString);
+                if(!result.getString("type").equals("error")) {
+                    allEvents = new JSONArray(result.getString("message"));
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("AllEvents", result.getString("message"));
+
+                    editor.apply();
+                    populateBrowseList();
+                } else {
+                    Toast.makeText(context, result.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch(JSONException e) {
+                Toast.makeText(context, "DEBUG: SOME ERROR", Toast.LENGTH_LONG).show();
+                browseSpinner.setVisibility(View.GONE);
+            }
+            browseSpinner.setVisibility(View.GONE);
+        }
+    }
 
 
     // Map Helper Functions
