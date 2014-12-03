@@ -64,6 +64,7 @@ public class EventActivity extends Activity {
         } catch(JSONException e) {
 
         }
+        amAttending();
 
         updateComments();
 
@@ -77,8 +78,22 @@ public class EventActivity extends Activity {
     }
 
     private void setupButtons() {
-        Button attendBTN = (Button)findViewById(R.id.event_button_attend);
+        final Button attendBTN = (Button)findViewById(R.id.event_button_attend);
         Button commentBTN = (Button)findViewById(R.id.event_button_comment);
+
+        try {
+            JSONArray attending = new JSONArray(prefs.getString("AttendingEvents", null));
+            for (int i = 0; i < attending.length(); i++) {
+                JSONObject j = attending.getJSONObject(i);
+                if (j.getString("EventID").equals(event.getString("EventID"))) {
+                    attendBTN.setText("UnAttend");
+                    break;
+                }
+            }
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
+
         attendBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +103,7 @@ public class EventActivity extends Activity {
                     json.put("username", prefs.getString("UserName", null));
                     json.put("sessionid", prefs.getString("SessionID", null));
                     json.put("eventid", event.getString("EventID"));
+
                     new attendEvent(EventActivity.this).execute(json.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -101,6 +117,23 @@ public class EventActivity extends Activity {
                 frag.show(getFragmentManager(), "CommentFragment");
             }
         });
+    }
+
+    private void amAttending() {
+        try {
+            String attendString = prefs.getString("AttendingEvents", null);
+            JSONArray attending = new JSONArray(attendString);
+
+            for(int i=0; i<attending.length(); i++) {
+                JSONObject j = attending.getJSONObject(i);
+                if(j.getString("EventID").equals(event.getString("EventID"))) {
+                    Button attendBtn = (Button)findViewById(R.id.event_button_attend);
+                    attendBtn.setText("UnAttend");
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void onSubmitComment(String comment) {
@@ -251,7 +284,14 @@ public class EventActivity extends Activity {
             }
             if(!isCancelled()) {
                 HttpClient httpclient = new DefaultHttpClient();
-                HttpPost post = new HttpPost(Constants.api_base + Constants.attendEvent);
+                HttpPost post;
+                Button attendBtn = (Button)findViewById(R.id.event_button_attend);
+                if(attendBtn.getText().equals("Attend")) {
+                    post = new HttpPost(Constants.api_base + Constants.attendEvent);
+                } else {
+                    post = new HttpPost(Constants.api_base + Constants.unattendEvent);
+                }
+
                 try {
                     String postParams = params[0];
                     StringEntity se = new StringEntity(postParams);
@@ -274,7 +314,12 @@ public class EventActivity extends Activity {
             try {
                 JSONObject result = new JSONObject(resultString);
                 if (!result.getString("type").equals("error")) {
-
+                    Button attendBtn = (Button)findViewById(R.id.event_button_attend);
+                    if(attendBtn.getText().equals("Attend")) {
+                        attendBtn.setText("UnAttend");
+                    } else {
+                        attendBtn.setText("Attend");
+                    }
                 } else {
                     Toast.makeText(context, result.getString("message"), Toast.LENGTH_LONG).show();
                 }
