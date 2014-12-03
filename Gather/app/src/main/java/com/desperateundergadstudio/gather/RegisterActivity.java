@@ -3,6 +3,8 @@ package com.desperateundergadstudio.gather;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -62,22 +64,33 @@ public class RegisterActivity extends Activity {
 
         @Override
         protected String doInBackground(String... params) {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost post = new HttpPost(Constants.api_base + Constants.register);
-            try {
-                String postParams = params[0];
-                StringEntity se = new StringEntity(postParams);
-                post.setEntity(se);
-                post.setHeader("Accept", "application/json");
-                post.setHeader("Content-type", "application/json");
+            if(noInternet()) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(RegisterActivity.this, R.string.noInternet, Toast.LENGTH_LONG).show();
+                    }
+                });
+                this.cancel(true);
+            }
+            if(!isCancelled()) {
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost post = new HttpPost(Constants.api_base + Constants.register);
+                try {
+                    String postParams = params[0];
+                    StringEntity se = new StringEntity(postParams);
+                    post.setEntity(se);
+                    post.setHeader("Accept", "application/json");
+                    post.setHeader("Content-type", "application/json");
 
-                HttpResponse response = httpclient.execute(post);
-                // Get the response message as a string and return it
-                // for access in postExecute
-                return EntityUtils.toString(response.getEntity());
+                    HttpResponse response = httpclient.execute(post);
+                    // Get the response message as a string and return it
+                    // for access in postExecute
+                    return EntityUtils.toString(response.getEntity());
 
-            } catch (IOException e) {
+                } catch (IOException e) {
 
+                }
             }
             return null;
         }
@@ -120,5 +133,15 @@ public class RegisterActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean noInternet() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if(ni == null) {
+            // No Internet
+            return true;
+        }
+        return false;
     }
 }

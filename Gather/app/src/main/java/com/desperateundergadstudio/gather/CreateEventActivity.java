@@ -6,6 +6,8 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -62,12 +64,16 @@ public class CreateEventActivity extends Activity {
             public void onClick(View v) {
                 EditText eventTitle = (EditText)findViewById(R.id.createEvent_editText_eventDescription);
                 EditText eventDescription = (EditText)findViewById(R.id.createEvent_editText_eventDescription);
+                Button eventDate = (Button)findViewById(R.id.createEvent_button_date);
+                Button eventTime = (Button)findViewById(R.id.createEvent_button_time);
                 try {
                     JSONObject json = new JSONObject();
                     json.put("eventTitle", eventTitle.getText().toString());
-                    json.put("eventDesscription", eventDescription.getText().toString());
+                    json.put("eventDescription", eventDescription.getText().toString());
                     json.put("username", currentUser.getString("username"));
                     json.put("sessionid", currentUser.getString("sessionid"));
+                    json.put("eventDate", eventDate.getText().toString());
+                    json.put("eventTime", eventTime.getText().toString());
 
                     new submit(CreateEventActivity.this).execute(json.toString());
                 } catch(JSONException e) {}
@@ -105,22 +111,35 @@ public class CreateEventActivity extends Activity {
 
         @Override
         protected String doInBackground(String... params) {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost post = new HttpPost(Constants.api_base + Constants.createEvent);
-            try {
-                String postParams = params[0];
-                StringEntity se = new StringEntity(postParams);
-                post.setEntity(se);
-                post.setHeader("Accept", "application/json");
-                post.setHeader("Content-type", "application/json");
+            if(noInternet()) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(CreateEventActivity.this, R.string.noInternet, Toast.LENGTH_LONG).show();
+                        spinner.setVisibility(View.GONE);
+                    }
+                });
+                this.cancel(true);
+            }
 
-                HttpResponse response = httpclient.execute(post);
-                // Get the response message as a string and return it
-                // for access in postExecute
-                return EntityUtils.toString(response.getEntity());
+            if(!isCancelled()) {
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost post = new HttpPost(Constants.api_base + Constants.createEvent);
+                try {
+                    String postParams = params[0];
+                    StringEntity se = new StringEntity(postParams);
+                    post.setEntity(se);
+                    post.setHeader("Accept", "application/json");
+                    post.setHeader("Content-type", "application/json");
 
-            } catch (IOException e) {
+                    HttpResponse response = httpclient.execute(post);
+                    // Get the response message as a string and return it
+                    // for access in postExecute
+                    return EntityUtils.toString(response.getEntity());
 
+                } catch (IOException e) {
+
+                }
             }
             return null;
         }
@@ -214,6 +233,16 @@ public class CreateEventActivity extends Activity {
             }
             return ret;
         }
+    }
+
+    private boolean noInternet() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if(ni == null) {
+            // No Internet
+            return true;
+        }
+        return false;
     }
 }
 

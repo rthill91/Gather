@@ -106,7 +106,7 @@ public class LoginActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(LoginActivity.this, "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, R.string.noInternet, Toast.LENGTH_LONG).show();
                         spinner.setVisibility(View.GONE);
                     }
                 });
@@ -197,7 +197,6 @@ public class LoginActivity extends Activity {
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if(ni == null) {
             // No Internet
-//            Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
             return true;
         }
         return false;

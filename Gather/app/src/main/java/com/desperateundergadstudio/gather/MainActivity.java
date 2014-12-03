@@ -242,7 +242,7 @@ public class MainActivity extends Activity implements LocationListener {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(MainActivity.this, "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, R.string.noInternet, Toast.LENGTH_LONG).show();
                         homeSpinner.setVisibility(View.GONE);
                     }
                 });
@@ -303,7 +303,7 @@ public class MainActivity extends Activity implements LocationListener {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(MainActivity.this, "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, R.string.noInternet, Toast.LENGTH_LONG).show();
                         browseSpinner.setVisibility(View.GONE);
                     }
                 });
@@ -392,8 +392,7 @@ public class MainActivity extends Activity implements LocationListener {
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if(ni == null) {
-            // No Internet
-//            Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+            // no internet
             return true;
         }
         return false;

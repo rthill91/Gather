@@ -20,5 +20,6 @@
     <string name="user_hint">UserName</string>
     <string name="pass_hint">Password</string>
     <string name="hello_world">Hello world!</string>
+    <string name="noInternet">NO INTERNET CONNECTION</string>
 
 </resources>

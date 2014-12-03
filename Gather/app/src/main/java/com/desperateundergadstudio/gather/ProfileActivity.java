@@ -80,7 +80,7 @@ public class ProfileActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(ProfileActivity.this, "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ProfileActivity.this, R.string.noInternet, Toast.LENGTH_LONG).show();
                     }
                 });
                 this.cancel(true);
@@ -161,7 +161,6 @@ public class ProfileActivity extends Activity {
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if(ni == null) {
             // No Internet
-//            Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
             return true;
         }
         return false;
