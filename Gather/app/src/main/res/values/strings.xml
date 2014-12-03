@@ -10,13 +10,8 @@
     <string name="title_activity_login">Login</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_profile">Profile</string>
-    <string name="lbl_hostingEvents">Hosting</string>
-    <string name="lbl_attendingEvents">Attending</string>
-    <string name="lbl_event1">Flag Football!</string>
-    <string name="lbl_event2">CS 464 Study Group</string>
-    <string name="lbl_event3">Secret Society Meeting</string>
-    <string name="lbl_event4">Smash Bros Game Night</string>
-    <string name="lbl_event5">UA Breakdance 2014</string>
+    <string name="title_activity_event">Event</string>
+    <string name="title_activity_create_event">Create Event</string>
     <string name="lbl_search">Search</string>
     <string name="lbl_categories">Search</string>
     <string name="lbl_category1">Athletics</string>
@@ -25,7 +20,5 @@
     <string name="user_hint">UserName</string>
     <string name="pass_hint">Password</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_event">EventActivity</string>
-    <string name="title_activity_create_event">CreateEventActivity</string>
 
 </resources>

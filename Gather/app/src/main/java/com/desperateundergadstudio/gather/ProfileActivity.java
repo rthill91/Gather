@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -74,22 +76,33 @@ public class ProfileActivity extends Activity {
         }
 
         protected String doInBackground(String... params) {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost post = new HttpPost(Constants.api_base + Constants.logout);
-            try {
-                String postParams = params[0];
-                StringEntity se = new StringEntity(postParams);
-                post.setEntity(se);
-                post.setHeader("Accept", "application/json");
-                post.setHeader("Content-type", "application/json");
+            if(noInternet()) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ProfileActivity.this, "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+                    }
+                });
+                this.cancel(true);
+            }
+            if(!isCancelled()) {
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost post = new HttpPost(Constants.api_base + Constants.logout);
+                try {
+                    String postParams = params[0];
+                    StringEntity se = new StringEntity(postParams);
+                    post.setEntity(se);
+                    post.setHeader("Accept", "application/json");
+                    post.setHeader("Content-type", "application/json");
 
-                HttpResponse response = httpclient.execute(post);
-                // Get the response message as a string and return it
-                // for access in postExecute
-                return EntityUtils.toString(response.getEntity());
+                    HttpResponse response = httpclient.execute(post);
+                    // Get the response message as a string and return it
+                    // for access in postExecute
+                    return EntityUtils.toString(response.getEntity());
 
-            } catch (IOException e) {
+                } catch (IOException e) {
 
+                }
             }
             return null;
         }
@@ -140,5 +153,17 @@ public class ProfileActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private boolean noInternet() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if(ni == null) {
+            // No Internet
+//            Toast.makeText(getApplicationContext(), "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return false;
     }
 }
