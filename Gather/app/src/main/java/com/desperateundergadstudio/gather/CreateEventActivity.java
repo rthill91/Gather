@@ -62,7 +62,7 @@ public class CreateEventActivity extends Activity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText eventTitle = (EditText)findViewById(R.id.createEvent_editText_eventDescription);
+                EditText eventTitle = (EditText)findViewById(R.id.createEvent_editText_eventTitle);
                 EditText eventDescription = (EditText)findViewById(R.id.createEvent_editText_eventDescription);
                 Button eventDate = (Button)findViewById(R.id.createEvent_button_date);
                 Button eventTime = (Button)findViewById(R.id.createEvent_button_time);
@@ -150,6 +150,7 @@ public class CreateEventActivity extends Activity {
                 JSONObject result = new JSONObject(resultString);
                 if(!result.getString("type").equals("error")) {
                     Toast.makeText(context, result.getString("message"), Toast.LENGTH_SHORT).show();
+                    CreateEventActivity.this.finish();
                 } else {
                     Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
                 }
