@@ -315,14 +315,17 @@ public class EventActivity extends Activity {
                 JSONObject result = new JSONObject(resultString);
                 if (!result.getString("type").equals("error")) {
                     Button attendBtn = (Button)findViewById(R.id.event_button_attend);
-//                    TextView attendees = (TextView)findViewById(R.id.event_textView_attendees);
-//                    int test = Integer.parseInt(attendees.getText().toString());
-//                    attendees.setText("Current Number Of Attendees: " + event.getString("NumAttending"));
+                    TextView attendees = (TextView)findViewById(R.id.event_textView_attendees);
+                    String[] splitText = attendees.getText().toString().split(" ");
+                    int updatedValue = Integer.parseInt(splitText[splitText.length-1]);
                     if(attendBtn.getText().equals("Attend")) {
                         attendBtn.setText("UnAttend");
+                        updatedValue += 1;
                     } else {
                         attendBtn.setText("Attend");
+                        updatedValue -= 1;
                     }
+                    attendees.setText("Current Number Of Attendees: " + String.valueOf(updatedValue));
                 } else {
                     Toast.makeText(context, result.getString("message"), Toast.LENGTH_LONG).show();
                 }
