@@ -48,6 +48,7 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements LocationListener, OnMapClickListener {
 
     private JSONObject currentUser;
+    private LocationManager locationManager;
 
     private ProgressBar homeSpinner;
     private ProgressBar browseSpinner;
@@ -133,18 +134,16 @@ public class MainActivity extends Activity implements LocationListener, OnMapCli
         });
 
 
-
-        LocationManager locationManager;
         // Get the LocationManager Object
         locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
         // Create a criteria object needed to retrieve the provider
-        Criteria criteria = new Criteria();
-        // Get the name of the best available provider
-        String provider = locationManager.getBestProvider(criteria, true);
-        // Use provider immediately to get LKL
-        Location location = locationManager.getLastKnownLocation(provider);
-        // request that the provider send this activity GPS updates every 20 seconds
-        locationManager.requestLocationUpdates(provider, 20000, 0, this);
+//        Criteria criteria = new Criteria();
+//        // Get the name of the best available provider
+//        String provider = locationManager.getBestProvider(criteria, true);
+//        // Use provider immediately to get LKL
+//        Location location = locationManager.getLastKnownLocation(provider);
+//        // request that the provider send this activity GPS updates every 20 seconds
+//        locationManager.requestLocationUpdates(provider, 20000, 0, this);
 
         //Set up click listener on the map
         GoogleMap MapFrag = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -211,9 +210,18 @@ public class MainActivity extends Activity implements LocationListener, OnMapCli
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         refreshEvents();
+        Criteria criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, true);
+        locationManager.requestLocationUpdates(provider, 20000, 0, this);
     }
 
     private void populateHomeList() {
