@@ -315,6 +315,9 @@ public class EventActivity extends Activity {
                 JSONObject result = new JSONObject(resultString);
                 if (!result.getString("type").equals("error")) {
                     Button attendBtn = (Button)findViewById(R.id.event_button_attend);
+//                    TextView attendees = (TextView)findViewById(R.id.event_textView_attendees);
+//                    int test = Integer.parseInt(attendees.getText().toString());
+//                    attendees.setText("Current Number Of Attendees: " + event.getString("NumAttending"));
                     if(attendBtn.getText().equals("Attend")) {
                         attendBtn.setText("UnAttend");
                     } else {
