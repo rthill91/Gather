@@ -7,7 +7,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listItem_textView_comment"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listItem_textView_username"
+        android:textColor="#777777"
+        android:gravity="right"
+        android:layout_marginRight="10dp"/>
 
 </LinearLayout>

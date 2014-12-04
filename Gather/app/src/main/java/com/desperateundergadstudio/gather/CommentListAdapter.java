@@ -40,8 +40,10 @@ public class CommentListAdapter extends ArrayAdapter<JSONObject> {
         }
 
         TextView commentText = (TextView)commentView.findViewById(R.id.listItem_textView_comment);
+        TextView commenter = (TextView)commentView.findViewById(R.id.listItem_textView_username);
         try {
             commentText.setText(o1.getString("CommentText"));
+            commenter.setText(o1.getString("UserName"));
         } catch(JSONException e) {
 
         }

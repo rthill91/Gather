@@ -9,6 +9,7 @@ public class Constants {
     static String logout = "/user/logout";
     static String register = "/user/register";
     static String getAttendingEvents = "/events/user/attending";
+    static String getCreatedEvents = "/events/user/created";
     static String getAllEvents = "/events/all";
     static String createEvent = "/events/create";
     static String getEventComments = "/events/comments";
