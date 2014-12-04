@@ -9,6 +9,7 @@ import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -113,6 +114,16 @@ public class CreateEventActivity extends Activity {
             public void onClick(View view) {
                 DialogFragment timeFragment = new TimePickerFragment();
                 timeFragment.show(getFragmentManager(), "timePicker");
+            }
+        });
+
+        Button mapButton = (Button)findViewById(R.id.createEvent_button_map);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateEventActivity.this, LocationNewEventActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                CreateEventActivity.this.startActivity(intent);
             }
         });
 /*
