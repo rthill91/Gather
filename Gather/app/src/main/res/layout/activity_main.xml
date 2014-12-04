@@ -61,7 +61,8 @@
                     android:id="@+id/tabBrowse"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="#ffffffff">
 
                     <ListView
                         android:layout_width="fill_parent"

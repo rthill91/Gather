@@ -8,6 +8,7 @@
         android:layout_height="fill_parent"
         android:id="@+id/eventFragment_editText_comment"
         android:hint="Enter Your Comment Here"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:background="#ffffffff"/>
 
 </LinearLayout>
