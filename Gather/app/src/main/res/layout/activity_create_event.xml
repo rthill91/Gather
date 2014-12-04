@@ -68,4 +68,13 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Event Location"
+        android:id="@+id/createEvent_button_map"
+        android:layout_below="@+id/createEvent_button_time"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false" />
 </RelativeLayout>

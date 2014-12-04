@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -44,7 +45,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class MainActivity extends Activity implements LocationListener {
+public class MainActivity extends Activity implements LocationListener, OnMapClickListener {
 
     private JSONObject currentUser;
 
@@ -61,6 +62,7 @@ public class MainActivity extends Activity implements LocationListener {
     private ListView browseList;
     private MainListAdapter browseArrayAdapter;
     private ArrayList<JSONObject> browseEvents = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +149,15 @@ public class MainActivity extends Activity implements LocationListener {
         Location location = locationManager.getLastKnownLocation(provider);
         // request that the provider send this activity GPS updates every 20 seconds
         locationManager.requestLocationUpdates(provider, 20000, 0, this);
+
+        //Set up click listener on the map
+        GoogleMap MapFrag = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        MapFrag.setOnMapClickListener((OnMapClickListener) this);
+    }
+
+    @Override
+    public void onMapClick(LatLng point) {
+        // point will be the latitude/ longitude of where you click
     }
 
     private void setupButtons() {
@@ -362,6 +373,7 @@ public class MainActivity extends Activity implements LocationListener {
             drawMarker(location);
         }
     }
+
 
     private void drawMarker(Location location) {
         GoogleMap mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
