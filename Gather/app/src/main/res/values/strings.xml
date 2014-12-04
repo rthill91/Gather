@@ -21,5 +21,6 @@
     <string name="pass_hint">Password</string>
     <string name="hello_world">Hello world!</string>
     <string name="noInternet">NO INTERNET CONNECTION</string>
+    <string name="title_activity_location_new_event">LocationNewEventActivity</string>
 
 </resources>
