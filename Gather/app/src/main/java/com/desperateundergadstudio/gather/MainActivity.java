@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -134,17 +136,17 @@ public class MainActivity extends Activity implements LocationListener {
 
 
 
-//        LocationManager locationManager;
-//        // Get the LocationManager Object
-//        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
-//        // Create a criteria object needed to retrieve the provider
-//        Criteria criteria = new Criteria();
-//        // Get the name of the best available provider
-//        String provider = locationManager.getBestProvider(criteria, true);
-//        // Use provider immediately to get LKL
-//        Location location = locationManager.getLastKnownLocation(provider);
-//        // request that the provider send this activity GPS updates every 20 seconds
-//        locationManager.requestLocationUpdates(provider, 20000, 0, this);
+        LocationManager locationManager;
+        // Get the LocationManager Object
+        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        // Create a criteria object needed to retrieve the provider
+        Criteria criteria = new Criteria();
+        // Get the name of the best available provider
+        String provider = locationManager.getBestProvider(criteria, true);
+        // Use provider immediately to get LKL
+        Location location = locationManager.getLastKnownLocation(provider);
+        // request that the provider send this activity GPS updates every 20 seconds
+        locationManager.requestLocationUpdates(provider, 20000, 0, this);
     }
 
     private void setupButtons() {
@@ -220,7 +222,7 @@ public class MainActivity extends Activity implements LocationListener {
                 j = allEvents.getJSONObject(i);
                 browseEvents.add(j);
             }
-            browseArrayAdapter.notifyDataSetChanged();;
+            browseArrayAdapter.notifyDataSetChanged();
         } catch(Exception e) {
 
         }
@@ -372,7 +374,21 @@ public class MainActivity extends Activity implements LocationListener {
         mMap.addMarker(new MarkerOptions()
             .position(currentPosition)
             .snippet("Lat:" + location.getLatitude() + "Lng:" + location.getLongitude()));
+        try {
+            for (int i = 0; i < attendingEvents.length(); i++) {
+                JSONObject curObject;
+                curObject = attendingEvents.getJSONObject(i);
+                if (curObject.get("Latitude").getClass().getName().equals("java.lang.Double") && curObject.get("Longitude").getClass().getName().equals("java.lang.Double")) {
+                    LatLng eventPosition = new LatLng(curObject.getDouble("Latitude"), curObject.getDouble("Longitude"));
+                    mMap.addMarker(new MarkerOptions()
+                            .position(eventPosition)
+                            .snippet(""));
+                }
+
+            }
+        }catch(Exception e){}
     }
+
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
