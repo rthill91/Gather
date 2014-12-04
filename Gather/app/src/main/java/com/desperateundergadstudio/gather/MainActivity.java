@@ -117,8 +117,6 @@ public class MainActivity extends Activity implements LocationListener, OnMapCli
             }
         });
 
-        new loadAttendingEvents(MainActivity.this).execute(currentUser.toString());
-
         //Create browse event list
         browseList = (ListView)findViewById(R.id.main_listView_browseList);
         browseEvents = new ArrayList<JSONObject>();
@@ -133,8 +131,6 @@ public class MainActivity extends Activity implements LocationListener, OnMapCli
                 getApplicationContext().startActivity(intent);
             }
         });
-
-        new loadAllEvents(MainActivity.this).execute(currentUser.toString());
 
 
 
@@ -197,18 +193,27 @@ public class MainActivity extends Activity implements LocationListener, OnMapCli
                 launchProfileActivity();
                 return true;
             case R.id.action_refresh:
-                homeSpinner.setVisibility(View.VISIBLE);
-                browseSpinner.setVisibility(View.VISIBLE);
-                new loadAttendingEvents(MainActivity.this).execute(currentUser.toString());
-                new loadAllEvents(MainActivity.this).execute(currentUser.toString());
+                refreshEvents();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
 
+    private void refreshEvents() {
+        homeSpinner.setVisibility(View.VISIBLE);
+        browseSpinner.setVisibility(View.VISIBLE);
+        new loadAttendingEvents(MainActivity.this).execute(currentUser.toString());
+        new loadAllEvents(MainActivity.this).execute(currentUser.toString());
     }
 
     public void onBackPressed() {
         // Do nothing for the moment
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshEvents();
     }
 
     private void populateHomeList() {
