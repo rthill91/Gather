@@ -8,6 +8,7 @@ import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.support.v4.app.Fragment;
@@ -42,12 +44,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Map;
 
 
 public class CreateEventActivity extends Activity {
 
     private ProgressBar spinner;
     private JSONObject currentUser;
+
+    public static LatLng eventLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +115,17 @@ public class CreateEventActivity extends Activity {
                 timeFragment.show(getFragmentManager(), "timePicker");
             }
         });
+/*
+        Button mapButton = (Button)findViewById(R.id.createEvent_button_map);
 
-        final Button mapButton = (Button)findViewById(R.id.createEvent_button_map);
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment frag = new locationFragment();
+                frag.show(getFragmentManager(), "LocationFragment");
+            }
+        });*/
 
        // mapButton.setOnClickListener((view) -> {
         //       DialogFragment locationFragment = new LocationPickFragment();
@@ -214,22 +228,18 @@ public class CreateEventActivity extends Activity {
         }
     }
 
-    public static class locationFragment extends DialogFragment{//} implements LocationPickDialog.OnLocationSetListener{
-       // @Override
-        /*
+    //public static class locationFragment extends DialogFragment  implements DialogInterface.OnClickListener {
+       /* View mMap =  ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getView();
+
         public Dialog onCreateDialog(Bundle savedInstanceState){
-            MapFragment mMap = new MapFragment();
-            SupportMapFragment mMapFragment = new SupportMapFragment();
-            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-
-
-           // return new AlertDialog.Builder(getActivity()).setTitle(R.string.app_name).setMessage("Choose a Location").setPositiveButton("Submit", this)
-            //        .setPositiveButton("Submit", this).setNegativeButton("Cancel", null).setView(mMap).create();
-
+            return new AlertDialog.Builder(getActivity()).setPositiveButton("Submit", this).setView(mMap).create();
         }
-        */
 
-    }
+        @Override
+        public void onClick(DialogInterface dialog, int position) {
+            dialog.dismiss();
+        }*/
+    //}
 
     public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
         @Override
