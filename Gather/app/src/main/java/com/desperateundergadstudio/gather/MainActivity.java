@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -27,7 +26,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.apache.http.HttpResponse;
@@ -49,6 +50,7 @@ public class MainActivity extends Activity implements LocationListener, OnMapCli
 
     private JSONObject currentUser;
     private LocationManager locationManager;
+    private Marker userLocation = null;
 
     private ProgressBar homeSpinner;
     private ProgressBar browseSpinner;
@@ -219,9 +221,7 @@ public class MainActivity extends Activity implements LocationListener, OnMapCli
     protected void onResume() {
         super.onResume();
         refreshEvents();
-        Criteria criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
-        locationManager.requestLocationUpdates(provider, 20000, 0, this);
+        locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER, 20000, 0, this);
     }
 
     private void populateHomeList() {
@@ -247,6 +247,7 @@ public class MainActivity extends Activity implements LocationListener, OnMapCli
                 browseEvents.add(j);
             }
             browseArrayAdapter.notifyDataSetChanged();
+            updateMapEvents();
         } catch(Exception e) {
 
         }
@@ -390,28 +391,36 @@ public class MainActivity extends Activity implements LocationListener, OnMapCli
 
     private void drawMarker(Location location) {
         GoogleMap mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-        mMap.clear();
+//        mMap.clear();
+        if(userLocation != null)
+            userLocation.remove();
         // convert the location object to a latlng object
         LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
         // zoom to the current location
         mMap.animateCamera((CameraUpdateFactory.newLatLngZoom(currentPosition, 16)));
         // add a marker to the map indicating current position
-        mMap.addMarker(new MarkerOptions()
-            .position(currentPosition)
-            .snippet("Lat:" + location.getLatitude() + "Lng:" + location.getLongitude()));
+        userLocation = mMap.addMarker(new MarkerOptions()
+                .position(currentPosition)
+                .title("User Location")
+                .snippet("Lat:" + location.getLatitude() + "Lng:" + location.getLongitude())
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+
+    }
+    private void updateMapEvents() {
         try {
+            GoogleMap mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
             for (int i = 0; i < attendingEvents.length(); i++) {
-                JSONObject curObject;
-                curObject = attendingEvents.getJSONObject(i);
-                if (curObject.get("Latitude").getClass().getName().equals("java.lang.Double") && curObject.get("Longitude").getClass().getName().equals("java.lang.Double")) {
+                JSONObject curObject = attendingEvents.getJSONObject(i);
+                if(curObject.get("Latitude").getClass().getName().equals("java.lang.Double") && curObject.get("Longitude").getClass().getName().equals("java.lang.Double")) {
                     LatLng eventPosition = new LatLng(curObject.getDouble("Latitude"), curObject.getDouble("Longitude"));
                     mMap.addMarker(new MarkerOptions()
-                            .position(eventPosition)
-                            .snippet(""));
+                            .title(curObject.getString("Title"))
+                            .position(eventPosition));
                 }
-
             }
-        }catch(Exception e){}
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
