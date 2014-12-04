@@ -371,7 +371,7 @@ public class EventActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class commentFragment extends DialogFragment implements DialogInterface.OnClickListener {
+    public static class commentFragment extends DialogFragment implements DialogInterface.OnClickListener {
         private EditText commentField;
 
         @Override
